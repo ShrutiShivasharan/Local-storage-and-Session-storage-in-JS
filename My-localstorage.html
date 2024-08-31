@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Local storage</title>
+</head>
+<body>
+
+	<h1>My shopping cart</h1>
+	<br>
+	<button onclick="addToCart()">Add To Cart</button>
+	<button onclick="viewCartData()">View Cart Data</button>
+	<button onclick="updateCartData()">Update Cart Data</button>
+	<button onclick="deleteCart()">Delete Cart Product</button>
+
+
+	<!-- Js -->
+	<script>
+		//add
+		function addToCart(){
+			let cartPayload = {
+				name:'black dress',
+				category:'womens',
+				price:2000,
+				discount:200,
+				quntity:1,
+				shipping:100,
+				totalAmount:2301
+			}
+			//json to string convert
+			let finalCartPayload = JSON.stringify(cartPayload);
+
+			//add data in localstorage
+			localStorage.setItem('cart',finalCartPayload);
+
+			//success
+			alert("product added!!");
+		}
+		//view
+		function viewCartData(){
+			let getCartData = localStorage.getItem('cart');
+			if(getCartData){
+				//get json string
+				let getProductData = JSON.parse(getCartData);
+				alert("name:" + getProductData.name + "\n" +
+						"category:" + getProductData.category + "\n" +
+						"price:" + getProductData.price + "\n" +
+						"discount:" + getProductData.discount + "\n" +
+						"quntity:" + getProductData.quntity + "\n" +	
+						"shipping:" + getProductData.shipping + "\n" +
+						"totalAmount:" + getProductData.totalAmount + "\n");
+			}else{
+				alert("No Product data Found to View!!");
+			}
+		}
+		//edit
+		function updateCartData(){
+			let getCartData = localStorage.getItem('cart');
+
+			if(getCartData){
+
+				//get json string
+				let getProductData = JSON.parse(getCartData);
+				getProductData.name = "white dress";
+
+				//update localstorage
+				localStorage.setItem('cart',JSON.stringify(getProductData));
+
+				alert("Cart is updated!!");
+
+			}else{
+				alert("No Product data Found!!");
+			}
+		}
+		//delete
+		function deleteCart(){
+			let getCartData = localStorage.getItem('cart');
+			if(getCartData){
+
+				localStorage.removeItem('cart');
+				alert ("Cart Data Removed!!");
+
+			}else{
+				alert("No Product data Found to delete to edit");
+			}
+		}
+
+	</script>
+
+</body>
+</html>

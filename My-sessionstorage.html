@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Session Storage</title>
+</head>
+<body>
+
+    <h1>My shopping cart</h1>
+    <br>
+
+    <button onclick="addToCart()">Add To Cart</button>
+    <button onclick="viewCartData()">View Cart Data</button>
+    <button onclick="updateCartData()">Update Cart Data</button>
+    <button onclick="deleteCartData()">Delete Cart Data</button>
+
+    <!-- JS -->
+    <script>
+        //add
+        function addToCart(){
+            let CartPayload = {
+                name: "Black dress",
+                category : "Women",
+                price : 2000,
+                discount : 200,
+                qnt : 1,
+                shipping : 100,
+                totalamount: 2301
+            }
+
+            //json to string convert
+            let finalCartPayload = JSON.stringify(CartPayload); 
+
+            //add session
+            sessionStorage.setItem('cartDetail',finalCartPayload);
+
+            alert("Product Added In Cart!!");
+        }
+
+        //view
+        function viewCartData(){
+        let getCartData = sessionStorage.getItem('cartDetail');
+        if(getCartData){
+            //get json string
+            let getProductData = JSON.parse(getCartData);
+
+            alert("name :" + getProductData.name + "\n" +
+                "category :" + getProductData.category + "\n" +
+                "price :" + getProductData.price + "\n" +
+                "discount :" + getProductData.discount + "\n" +
+                "qnt :" + getProductData.qnt + "\n" +
+                "shipping :" + getProductData.shipping + "\n" +
+                "totalamount :" + getProductData.totalamount + "\n");
+           
+        }else{
+            alert("No Data Found!!");
+        }
+        }
+
+        //update
+        function updateCartData(){
+            //get string
+            let getCartData = sessionStorage.getItem('cartDetail');
+
+            if(getCartData){
+
+                //get json string
+                let getProductData = JSON.parse(getCartData);
+                getProductData.name = "White dress";
+
+                //update
+                sessionStorage.setItem('cartDetail', JSON.stringify(getProductData));
+
+                alert("Cart data Updated!!");
+
+            }else{
+                alert("No Product Found to update");
+            }
+        }
+
+        //delete
+        function deleteCartData(){
+            let getCartData = sessionStorage.getItem('cartDetail');
+
+            if(getCartData){
+
+                sessionStorage.removeItem('cartDetail');
+                alert("Cart Data Removed!!");
+
+            }else{
+                alert("Data Not Found to Delete");
+            }
+        }
+
+
+
+    </script>
+
+</body>
+</html>
